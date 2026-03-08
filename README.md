@@ -1,5 +1,7 @@
 # OpenClaw Agent Autotune
 
+![CI](https://github.com/fengqve/openclaw-agent-autotune/actions/workflows/ci.yml/badge.svg)
+
 > Public name: **OpenClaw 自动优化器（越跑越好）**
 
 A production-friendly OpenClaw skill for continuous agent improvement with a strict loop:
