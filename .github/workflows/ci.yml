@@ -36,45 +36,21 @@ jobs:
 
       - name: Publish run summary
         run: |
-          decision=$(python - <<'PY'
-import json
-with open('/tmp/run_once_output.json','r',encoding='utf-8') as f:
-    data=json.load(f)
-print(data['decision'])
-PY
-)
-          base=$(python - <<'PY'
-import json
-with open('/tmp/run_once_output.json','r',encoding='utf-8') as f:
-    data=json.load(f)
-print(data['base_score'])
-PY
-)
-          cand=$(python - <<'PY'
-import json
-with open('/tmp/run_once_output.json','r',encoding='utf-8') as f:
-    data=json.load(f)
-print(data['candidate_score'])
-PY
-)
-          note=$(python - <<'PY'
-import json
-with open('/tmp/run_once_output.json','r',encoding='utf-8') as f:
-    data=json.load(f)
-print(data['note'])
-PY
-)
+          decision=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['decision'])")
+          base=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['base_score'])")
+          cand=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['candidate_score'])")
+          note=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['note'])")
           {
-            echo "## OpenClaw Agent Autotune Auto Demo";
-            echo "";
-            echo "| Metric | Value |";
-            echo "|---|---|";
-            echo "| base_score | ${base} |";
-            echo "| candidate_score | ${cand} |";
-            echo "| decision | ${decision} |";
-            echo "| note | ${note} |";
-            echo "";
-            echo "Policy: only keep changes when metrics improve and hard gates pass.";
+            echo "## OpenClaw Agent Autotune Auto Demo"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|---|---|"
+            echo "| base_score | ${base} |"
+            echo "| candidate_score | ${cand} |"
+            echo "| decision | ${decision} |"
+            echo "| note | ${note} |"
+            echo ""
+            echo "Policy: only keep changes when metrics improve and hard gates pass."
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload demo output artifact
