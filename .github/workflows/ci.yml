@@ -29,29 +29,18 @@ jobs:
           python scripts/run_once.py \
             --base examples/base.metrics.example.json \
             --candidate examples/candidate.metrics.example.json \
+            --change-meta examples/change.example.json \
+            --report-md /tmp/decision_report.md \
             --results /tmp/results.tsv > /tmp/run_once_output.json
           cat /tmp/run_once_output.json
-          grep '"decision": "keep"\|"decision": "rollback"' /tmp/run_once_output.json
           test -f /tmp/results.tsv
+          test -f /tmp/decision_report.md
 
-      - name: Publish run summary
+      - name: Publish readable summary
         run: |
-          decision=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['decision'])")
-          base=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['base_score'])")
-          cand=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['candidate_score'])")
-          note=$(python -c "import json;print(json.load(open('/tmp/run_once_output.json',encoding='utf-8'))['note'])")
-          {
-            echo "## OpenClaw Agent Autotune Auto Demo"
-            echo ""
-            echo "| Metric | Value |"
-            echo "|---|---|"
-            echo "| base_score | ${base} |"
-            echo "| candidate_score | ${cand} |"
-            echo "| decision | ${decision} |"
-            echo "| note | ${note} |"
-            echo ""
-            echo "Policy: only keep changes when metrics improve and hard gates pass."
-          } >> "$GITHUB_STEP_SUMMARY"
+          echo "## OpenClaw Agent Autotune Auto Demo" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/decision_report.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload demo output artifact
         uses: actions/upload-artifact@v4
@@ -60,3 +49,4 @@ jobs:
           path: |
             /tmp/run_once_output.json
             /tmp/results.tsv
+            /tmp/decision_report.md

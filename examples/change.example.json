@@ -1,0 +1,8 @@
+{
+  "change_title": "Tighten response structure: conclusion-first + checklist",
+  "hypothesis": "Improve task success while reducing verbose token usage",
+  "files_changed": [
+    "AGENTS.md",
+    "skills/openclaw-agent-autotune/SKILL.md"
+  ]
+}

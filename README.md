@@ -4,21 +4,13 @@
 
 > Public name: **OpenClaw 自动优化器（越跑越好）**
 
-A production-friendly OpenClaw skill for continuous agent improvement with a strict loop:
-
-**small change → benchmark → keep or rollback**
+它会自动执行，只有指标变好时才保留改动。
 
 ---
 
-## 1) 一句话
+## 用户怎么安装（对话方式）
 
-它会**自动执行评测闭环**，并且**只有指标变好时才保留改动**。
-
----
-
-## 2) 安装（给最终用户）
-
-不需要用户跑命令。让用户直接对 OpenClaw 说：
+直接对 OpenClaw 说：
 
 - `帮我安装 openclaw-agent-autotune`
 
@@ -26,42 +18,51 @@ A production-friendly OpenClaw skill for continuous agent improvement with a str
 
 - `用 openclaw-agent-autotune 跑一轮优化并汇报结果`
 
-> 备注：这是面向最终用户的安装方式（对话安装）。
+> 目标是让最终用户无需手动跑脚本。
 
 ---
 
-## 3) 效果展示（自动）
+## 效果在哪里看（自动展示）
 
-你不需要让用户手动执行脚本，效果通过自动化直接展示：
+无需用户执行命令，结果自动出现在 GitHub Actions：
 
-1. 每次 push / PR，GitHub Actions 会自动跑 demo
-2. CI 徽章会实时显示是否通过
-3. Run 页面会自动展示本轮 `keep/rollback` 结果（job summary + log）
-
-也就是说：
-
-- 有效果：CI 和运行结果会持续显示
-- 没效果：不会保留改动（rollback）
+1. **CI 徽章**：一眼看当前是否通过
+2. **Actions Run Summary**：可读报告，包含：
+   - 结论（keep / rollback）
+   - 为什么是这个结论（gate 检查 + 分数比较）
+   - 修改了哪里（change metadata）
+   - 修改带来什么提升（各指标 delta）
+3. **Artifacts**：完整机器可读输出
+   - `run_once_output.json`
+   - `results.tsv`
+   - `decision_report.md`
 
 ---
 
-## 4) 仓库包含内容
+## 仓库包含
 
 - `SKILL.md` — skill 行为定义
 - `scripts/score.py` — 计算综合评分
-- `scripts/run_once.py` — 单轮 keep/rollback 决策 + TSV 记录
-- `examples/*` — benchmark / metrics / results 示例
+- `scripts/run_once.py` — 单轮 keep/rollback 决策 + 解释报告
+- `examples/benchmark.tasks.example.jsonl`
+- `examples/base.metrics.example.json`
+- `examples/candidate.metrics.example.json`
+- `examples/change.example.json`
 - `.github/workflows/ci.yml` — 自动验证与自动展示
 - `LICENSE` — MIT
 
 ---
 
-## 5) 对外文案（推荐）
+## 核心机制
 
-**它会自动执行，只有指标变好时才保留改动。**
+- 固定 benchmark
+- 每轮只改一个小候选
+- 统一打分 + 硬门槛
+- 只保留更优结果
+- 不达标自动回滚
 
 ---
 
-## 6) License
+## License
 
 MIT

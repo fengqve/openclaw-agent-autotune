@@ -1,6 +1,6 @@
 ---
 name: openclaw-agent-autotune
-version: 0.1.2
+version: 0.1.3
 description: >
   Optimize OpenClaw agents with an automated safe eval loop: propose small
   prompt/skill changes, run fixed benchmark tasks, and keep changes only when
