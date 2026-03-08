@@ -1,11 +1,12 @@
 ---
 name: openclaw-agent-autotune
-version: 0.1.0
+version: 0.1.2
 description: >
-  Optimize OpenClaw agents with a safe eval loop: propose small prompt/skill
-  changes, run fixed benchmark tasks, keep only improvements, and roll back
-  regressions. Use this whenever users ask to improve agent quality, reduce
-  token cost/latency, or build continuous self-improvement for OpenClaw.
+  Optimize OpenClaw agents with an automated safe eval loop: propose small
+  prompt/skill changes, run fixed benchmark tasks, and keep changes only when
+  metrics improve (otherwise rollback). Use this whenever users ask to improve
+  agent quality, reduce token cost/latency, or build continuous self-improvement
+  for OpenClaw.
 author: FengQve
 ---
 
