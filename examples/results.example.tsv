@@ -1,0 +1,4 @@
+run_id	base_score	candidate_score	decision	notes
+20260308-1400	0.742	0.761	keep	Higher task success on troubleshooting prompts
+20260308-1430	0.761	0.748	rollback	Latency increased with no quality gain
+20260308-1500	0.761	0.769	keep	Reduced token cost while keeping success stable
